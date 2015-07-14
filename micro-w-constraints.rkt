@@ -4,17 +4,23 @@
 (define ($append $1 $2)
   (cond
     ((null? $1) $2)
-    ((pair? $1) (cons (car $1) ($append (cdr $1) $2)))
-    ((procedure? $1) (lambda () ($append $2 ($1))))))
+    ((promise? $1) (delay/name ($append $2 (force $1))))
+    ((pair? $1) (cons (car $1) ($append (cdr $1) $2)))))
 (define ($append-map g $)
   (cond
-    ((null? $) `())
-    ((pair? $) ($append (g (car $)) ($append-map g (cdr $))))
-    ((procedure? $) (lambda () ($append-map g ($))))))
-(define (pull $) (if (procedure? $) (pull ($)) $))
+    ((null? $) '())
+    ((promise? $) (delay/name ($append-map g (force $))))
+    ((pair? $) ($append (g (car $)) ($append-map g (cdr $))))))
+(define (pull $) (if (promise? $) (pull (force $)) $))
+(define (take n $)
+  (cond
+    ((null? $) '())
+    ((and n (zero? (- n 1))) (list (car $)))
+    (else (cons (car $) 
+            (take (and n (- n 1)) (pull (cdr $)))))))
 (define (var? n) (number? n))
-(define (call/initial-state-maker initial-state) ;; curry further
-  (lambda (g) (pull (g `(,initial-state . 0)))))
+(define ((call/initial-state-maker initial-state) n g) ;; curry further
+  (take n (pull (g `(,initial-state . 0)))))
 (define ((call/fresh f) s/c)
   (let ((s (car s/c)) (c (cdr s/c)))
     ((f (var c)) `(,s . ,(+ 1 c)))))
