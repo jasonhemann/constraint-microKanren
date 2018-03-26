@@ -170,7 +170,7 @@
     (λ (s)
       (ormap
         (λ (b)
-          (let ((s1 (unify b #t s)) (s2 (unify b #t s)))
+          (let ((s1 (unify b #t s)) (s2 (unify b #f s)))
             (and s1 s2 (not-b s1) (not-b s2))))
         booleano)))
   (λ (s)
