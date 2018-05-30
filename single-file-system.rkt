@@ -250,6 +250,19 @@
 (define-syntax-rule (conde (g0 g ...) (g0* g* ...) ...)
   (disj+ (conj+ g0 g ...) (conj+ g0* g* ...) ...))
 
+(define ((ifte g0 g1 g2) s/c)
+  (let loop (($ (g0 s/c)))
+    (cond
+     ((null? $) (g2 s/c))
+     ((promise? $) (delay/name (loop (force $))))
+     (else ($append-map g1 $)))))
+
+(define-syntax ifte*
+  (syntax-rules ()
+    ((_ g) g)
+    ((_ (g0 g1) (g0* g1*) ... g)
+     (ifte g0 g1 (ifte* (g0* g1*) ... g)))))
+     
 (define-syntax-rule (conda (g0 g1 g ...) ... (gn0 gn ...))
   (ifte* (g0 (conj+ g1 g ...)) ... (conj+ gn0 gn ...)))
 
