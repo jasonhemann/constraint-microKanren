@@ -9,10 +9,10 @@ Jason Hemann and Daniel P. Friedman:
 - [Scheme and Functional Programming Workshop version (2015)](https://www.schemeworkshop.org/2015/sfpw3-2015-hemann-friedman.pdf)
 - [Expanded WFLP 2016 version, published in EPTCS 234 (2017)](https://doi.org/10.4204/EPTCS.234.10)
 
-Both papers direct readers to `github.com/jasonhemann/constraint-microKanren` for the implementation. The manuscript sources are maintained separately, in repositories with independent Git histories:
+Both papers direct readers to `github.com/jasonhemann/constraint-microKanren` for the implementation. The manuscript sources are maintained separately as private archival repositories with independent Git histories:
 
-- [Scheme Workshop 2015 manuscript source](https://github.com/jasonhemann/constraint-microkanren-scheme-2015)
-- [WFLP 2016 manuscript source](https://github.com/jasonhemann/constraint-microkanren-wflp-2016)
+- [Scheme Workshop 2015 manuscript source](https://github.com/jasonhemann/constraint-microkanren-scheme-2015) (private)
+- [WFLP 2016 manuscript source](https://github.com/jasonhemann/constraint-microkanren-wflp-2016) (private)
 
 ## Files
 
